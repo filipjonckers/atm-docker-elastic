@@ -1,0 +1,18 @@
+output.elasticsearch:
+  enabled: false
+  hosts: ["elasticsearch:9200"]
+
+output.logstash:
+  enabled: false
+  hosts: ["logstash:5044"]
+
+output.console:
+  enabled: false
+  pretty: true
+
+filebeat.config:
+  inputs:
+    enabled: true
+    path: /usr/share/filebeat/inputs.d/*.yml
+    reload.enabled: false
+    reload.period: 10s

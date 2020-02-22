@@ -1,0 +1,10 @@
+- type: log
+  enabled: true
+  paths:
+    - /var/log/atm/20*/MSG/queue.*.csv
+  fields:
+    logsource: "msg.queue"
+  fields_under_root: true
+  exclude_lines: ['^MSG TYPE']
+  tags: ["ATM", "OLDI", "MSG"]
+

@@ -39,8 +39,26 @@ services:
       ELASTICSEARCH_USERNAME: "elastic"
       ELASTICSEARCH_PASSWORD: "${ELASTIC_PASSWORD}"
 
+  filebeat:
+    container_name: atm-filebeat
+    image: "docker.elastic.co/beats/filebeat:${ELASTIC_VERSION}"
+    networks:
+      - atm-elastic
+    depends_on:
+      - elasticsearch
+    user: root
+    command: filebeat -e -E output.elasticsearch.username=elastic -E output.elasticsearch.password=${ELASTIC_PASSWORD} -strict.perms=false
+    volumes:
+      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
+      # add prospectors to this directory and they will be dynamically loaded
+      - ./filebeat/inputs.d/:/usr/share/filebeat/inputs.d/
+      # persist the registry file between restarts, so to avoid data duplication
+      - fb-data:/usr/share/filebeat/data/
+      # ATM
+      - ../test/:/var/log/atm/
+
 volumes:
   es-data:
-  # fb-data:
+  fb-data:
 
 networks: {atm-elastic: {}}
