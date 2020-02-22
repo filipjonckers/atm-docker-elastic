@@ -1,4 +1,4 @@
-cluster.name: full-stack-cluster
+cluster.name: es-cluster
 node.name: atm-es-node-1
 path.data: /usr/share/elasticsearch/data
 http.port: 9200
