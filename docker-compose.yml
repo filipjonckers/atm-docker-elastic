@@ -13,7 +13,8 @@ services:
       - es-data:/usr/share/elasticsearch/data
       - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/elasticsearch.yml
     healthcheck:
-      test: ["CMD", "curl","-s" ,"-f", "-u", "elastic:${ELASTIC_PASSWORD}", "http://atm-elasticsearch:9200/_cat/health"]
+      test: ["CMD", "curl","-s" ,"-f", "-u", "elastic:${ELASTIC_PASSWORD}", "http://localhost:9200/_cat/health"]
+      retries: 10
     environment:
       discovery.type: "single-node"
       ES_JAVA_OPTS: "-Xms${ES_JVM_HEAP} -Xmx${ES_JVM_HEAP}"
@@ -30,6 +31,9 @@ services:
       - atm-elasticsearch
     volumes:
       - ./kibana/kibana.yml:/usr/share/kibana/kibana.yml
+    healthcheck:
+      test: ["CMD", "curl", "-s", "-f", "http://localhost:5601/login"]
+      retries: 10
     environment:
       ELASTICSEARCH_URL: "http://atm-elasticsearch:9200"
       ELASTICSEARCH_USERNAME: "elastic"
