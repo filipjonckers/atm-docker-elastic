@@ -1,0 +1,24 @@
+version: "3.6"
+services:
+  atm-elasticsearch:
+    image: "docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION}"
+    mem_limit: ${ES_MEM_LIMIT}
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - atm-elastic
+    volumes:
+      - es-data:/usr/share/elasticsearch/data
+      - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/elasticsearch.yml
+    environment:
+      ES_JAVA_OPTS: "-Xms${ES_JVM_HEAP} -Xmx${ES_JVM_HEAP}"
+      ELASTIC_PASSWORD: "${ELASTIC_PASSWORD}"
+      - "discovery.type=single-node"
+
+
+volumes:
+  es-data:
+  fb-data:
+
+networks: {atm-elastic: {}}
