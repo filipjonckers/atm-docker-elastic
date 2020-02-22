@@ -1,4 +1,4 @@
-version: "3.6"
+version: "2.4"
 services:
   atm-elasticsearch:
     container_name: atm-elasticsearch
@@ -12,7 +12,10 @@ services:
     volumes:
       - es-data:/usr/share/elasticsearch/data
       - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/elasticsearch.yml
+    healthcheck:
+      test: ["CMD", "curl","-s" ,"-f", "-u", "elastic:${ELASTIC_PASSWORD}", "http://atm-elasticsearch:9200/_cat/health"]
     environment:
+      discovery.type: "single-node"
       ES_JAVA_OPTS: "-Xms${ES_JVM_HEAP} -Xmx${ES_JVM_HEAP}"
       ELASTIC_PASSWORD: "${ELASTIC_PASSWORD}"
 
@@ -33,6 +36,6 @@ services:
       ELASTICSEARCH_PASSWORD: "${ELASTIC_PASSWORD}"
 volumes:
   es-data:
-  fb-data:
+  # fb-data:
 
 networks: {atm-elastic: {}}
