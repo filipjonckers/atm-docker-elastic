@@ -1,6 +1,6 @@
 version: "2.4"
 services:
-  atm-elasticsearch:
+  elasticsearch:
     container_name: atm-elasticsearch
     image: "docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION}"
     mem_limit: ${ES_MEM_LIMIT}
@@ -20,7 +20,7 @@ services:
       ES_JAVA_OPTS: "-Xms${ES_JVM_HEAP} -Xmx${ES_JVM_HEAP}"
       ELASTIC_PASSWORD: "${ELASTIC_PASSWORD}"
 
-  atm-kibana:
+  kibana:
     container_name: atm-kibana
     image: "docker.elastic.co/kibana/kibana:${ELASTIC_VERSION}"
     ports:
@@ -28,16 +28,17 @@ services:
     networks:
       - atm-elastic
     depends_on:
-      - atm-elasticsearch
+      - elasticsearch
     volumes:
       - ./kibana/kibana.yml:/usr/share/kibana/kibana.yml
     healthcheck:
       test: ["CMD", "curl", "-s", "-f", "http://localhost:5601/login"]
       retries: 10
     environment:
-      ELASTICSEARCH_URL: "http://atm-elasticsearch:9200"
+      ELASTICSEARCH_URL: "http://elasticsearch:9200"
       ELASTICSEARCH_USERNAME: "elastic"
       ELASTICSEARCH_PASSWORD: "${ELASTIC_PASSWORD}"
+
 volumes:
   es-data:
   # fb-data:
