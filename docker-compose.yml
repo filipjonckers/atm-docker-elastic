@@ -15,7 +15,6 @@ services:
     environment:
       ES_JAVA_OPTS: "-Xms${ES_JVM_HEAP} -Xmx${ES_JVM_HEAP}"
       ELASTIC_PASSWORD: "${ELASTIC_PASSWORD}"
-      - "discovery.type=single-node"
 
   atm-kibana:
     container_name: atm-kibana
