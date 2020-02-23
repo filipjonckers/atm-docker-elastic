@@ -1,0 +1,11 @@
+- type: log
+  enabled: true
+  paths:
+    - /var/log/atm/20*/ACTIONS/action_list_BROL.*.txt
+    - /var/log/atm/20*/ACTIONS/action_list_with_errors_BROL.*.txt
+  fields:
+    src: "actions"
+  fields_under_root: true
+  exclude_lines: ['^ CDC', 'ACTIONs performed on']
+  tags: ["ATM", "OLDI", "ACTIONS"]
+

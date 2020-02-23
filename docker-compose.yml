@@ -60,7 +60,7 @@ services:
       - atm-elastic
     depends_on:
       - elasticsearch
-      - logstash
+      # - logstash
     user: root
     # command: filebeat -e -E output.elasticsearch.username=elastic -E output.elasticsearch.password=${ELASTIC_PASSWORD} -strict.perms=false
     volumes:
