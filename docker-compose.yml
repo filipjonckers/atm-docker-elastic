@@ -68,9 +68,9 @@ services:
       # add prospectors to this directory and they will be dynamically loaded
       - ./filebeat/inputs.d/:/usr/share/filebeat/inputs.d/
       # persist the registry file between restarts, so to avoid data duplication
-      #- fb-data:/usr/share/filebeat/data/
+      - fb-data:/usr/share/filebeat/data/
       # ATM
-      - ../test/:/var/log/atm/
+      - ../logfiles-atm/:/var/log/atm/
 
 volumes:
   es-data:
