@@ -1,11 +1,8 @@
-output.elasticsearch:
-  enabled: false
-  hosts: ["elasticsearch:9200"]
-
 output.logstash:
-  enabled: false
+  enabled: true
   hosts: ["logstash:5044"]
 
+# for debugging purposes
 output.console:
   enabled: false
   pretty: true
